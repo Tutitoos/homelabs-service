@@ -52,37 +52,32 @@ var DNSDescZoneMap = map[int]string{
 	4: DNSDescGoogleSecondary,
 }
 
-type DNSStruct struct {
-}
+type dnsHelper struct{}
 
-func NewDNS() *DNSStruct {
-	return &DNSStruct{}
-}
+var DNS = dnsHelper{}
 
-func (d *DNSStruct) IsValidStatusId(statusId int) bool {
+func (dnsHelper) IsValidStatusId(statusId int) bool {
 	_, exists := DNSStatusDescMap[statusId]
 	return exists
 }
 
-func (d *DNSStruct) GetStatusName(statusId int) string {
+func (dnsHelper) GetStatusName(statusId int) string {
 	return DNSStatusNameMap[statusId]
 }
 
-func (d *DNSStruct) GetStatusDesc(statusId int) string {
+func (dnsHelper) GetStatusDesc(statusId int) string {
 	return DNSStatusDescMap[statusId]
 }
 
-func (d *DNSStruct) IsValidDNSId(dnsId int) bool {
+func (dnsHelper) IsValidDNSId(dnsId int) bool {
 	_, exists := DNSZoneMap[dnsId]
 	return exists
 }
 
-func (d *DNSStruct) GetDNSName(dnsId int) string {
+func (dnsHelper) GetDNSName(dnsId int) string {
 	return DNSZoneMap[dnsId]
 }
 
-func (d *DNSStruct) GetDNSDesc(dnsId int) string {
+func (dnsHelper) GetDNSDesc(dnsId int) string {
 	return DNSDescZoneMap[dnsId]
 }
-
-var DNS = NewDNS()

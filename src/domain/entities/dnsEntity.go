@@ -29,7 +29,6 @@ func CreateDNS(data queries.DNS) (*DNS, []string) {
 		errors = append(errors, "status_id is invalid")
 	}
 
-	// Si created_at no viene, generarlo automáticamente
 	var createdAt int64
 	if data.CreatedAt == nil {
 		createdAt = time.Now().UnixMilli()

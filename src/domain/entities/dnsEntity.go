@@ -1,6 +1,8 @@
 package entities
 
 import (
+	"time"
+
 	"homelabs-service/src/domain"
 	"homelabs-service/src/domain/queries"
 )
@@ -27,8 +29,12 @@ func CreateDNS(data queries.DNS) (*DNS, []string) {
 		errors = append(errors, "status_id is invalid")
 	}
 
+	// Si created_at no viene, generarlo automáticamente
+	var createdAt int64
 	if data.CreatedAt == nil {
-		errors = append(errors, "created_at is required")
+		createdAt = time.Now().UnixMilli()
+	} else {
+		createdAt = *data.CreatedAt
 	}
 
 	if len(errors) > 0 {
@@ -39,6 +45,6 @@ func CreateDNS(data queries.DNS) (*DNS, []string) {
 		DocumentId: "", // NOTE: DO NOT TOUCH THIS, LEAVE IT EMPTY. THE DATABASE WILL HANDLE ASSIGNING DOCUMENTID.
 		DNSId:      *data.DNSId,
 		StatusId:   *data.StatusId,
-		CreatedAt:  *data.CreatedAt,
+		CreatedAt:  createdAt,
 	}, errors
 }

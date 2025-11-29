@@ -22,6 +22,7 @@ type MongoSortOptions struct {
 
 type MongoCollections struct {
 	SAI *mongo.Collection
+	DNS *mongo.Collection
 }
 
 type IMongoDataSource struct {
@@ -76,6 +77,7 @@ func (r *IMongoDataSource) PreloadCollections() {
 
 	r.Collections = MongoCollections{
 		SAI: dbHomelabs.Collection("sai"),
+		DNS: dbHomelabs.Collection("dns"),
 	}
 }
 
@@ -83,6 +85,8 @@ func (r *IMongoDataSource) GetCollection(name string) *mongo.Collection {
 	switch name {
 	case "sai":
 		return r.Collections.SAI
+	case "dns":
+		return r.Collections.DNS
 	default:
 		return nil
 	}

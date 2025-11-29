@@ -5,25 +5,25 @@ import (
 	"homelabs-service/src/domain/queries"
 )
 
-type SAI struct {
+type DNS struct {
 	DocumentId string `bson:"_id"`
-	ZoneId     int    `bson:"zone_id"`
+	DNSId      int    `bson:"dns_id"`
 	StatusId   int    `bson:"status_id"`
 	CreatedAt  int64  `bson:"created_at"`
 }
 
-func CreateSAI(data queries.SAI) (*SAI, []string) {
+func CreateDNS(data queries.DNS) (*DNS, []string) {
 	errors := []string{}
 
-	if data.ZoneId == nil {
-		errors = append(errors, "zone_id is required")
-	} else if !domain.SAI.IsValidZoneId(*data.ZoneId) {
-		errors = append(errors, "zone_id is invalid")
+	if data.DNSId == nil {
+		errors = append(errors, "dns_id is required")
+	} else if !domain.DNS.IsValidDNSId(*data.DNSId) {
+		errors = append(errors, "dns_id is invalid")
 	}
 
 	if data.StatusId == nil {
 		errors = append(errors, "status_id is required")
-	} else if !domain.SAI.IsValidStatusId(*data.StatusId) {
+	} else if !domain.DNS.IsValidStatusId(*data.StatusId) {
 		errors = append(errors, "status_id is invalid")
 	}
 
@@ -35,9 +35,9 @@ func CreateSAI(data queries.SAI) (*SAI, []string) {
 		return nil, errors
 	}
 
-	return &SAI{
+	return &DNS{
 		DocumentId: "", // NOTE: DO NOT TOUCH THIS, LEAVE IT EMPTY. THE DATABASE WILL HANDLE ASSIGNING DOCUMENTID.
-		ZoneId:     *data.ZoneId,
+		DNSId:      *data.DNSId,
 		StatusId:   *data.StatusId,
 		CreatedAt:  *data.CreatedAt,
 	}, errors

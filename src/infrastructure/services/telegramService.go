@@ -54,3 +54,18 @@ func SendTelegramSAIMessage(itemDto dtos.SAI) {
 		shared.Logger.Warnf("failed to send telegram message: %v", err)
 	}
 }
+
+func SendTelegramDNSMessage(itemDto dtos.DNS) {
+	createdAtTime := time.Unix(itemDto.CreatedAt/1000, 0)
+	message := fmt.Sprintf("Servicio: %s\nIP: %s\nEstado: %s\nFecha: %s\nHora: %s",
+		*itemDto.StatusName,
+		*itemDto.DNSName,
+		*itemDto.StatusDesc,
+		createdAtTime.Format("2006-01-02"),
+		createdAtTime.Format("15:04:05"),
+	)
+
+	if err := SendTelegramMessage(message); err != nil {
+		shared.Logger.Warnf("failed to send telegram message: %v", err)
+	}
+}

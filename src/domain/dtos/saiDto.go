@@ -19,10 +19,10 @@ type SAI struct {
 func NewSAI(sai entities.SAI) SAI {
 	documentId, _ := shared.PARSER.SafeString(&sai.DocumentId)
 	zoneId, _ := shared.PARSER.SafeInt(&sai.ZoneId)
-	zoneName := domain.GetZoneName(zoneId)
+	zoneName := domain.SAI.GetZoneName(zoneId)
 	statusId, _ := shared.PARSER.SafeInt(&sai.StatusId)
-	statusName := domain.GetStatusName(statusId)
-	statusDesc := domain.GetStatusDesc(statusId)
+	statusName := domain.SAI.GetStatusName(statusId)
+	statusDesc := domain.SAI.GetStatusDesc(statusId)
 	createdAt, _ := shared.PARSER.SafeInt64(&sai.CreatedAt)
 
 	return SAI{

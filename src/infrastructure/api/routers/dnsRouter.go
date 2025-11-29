@@ -6,8 +6,8 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func SAIRouter(router fiber.Router) fiber.Router {
-	controller := controllers.SAIController()
+func DNSRouter(router fiber.Router) fiber.Router {
+	controller := controllers.DNSController()
 
 	router.Get("/", controller.GetItems)
 	router.Post("/", controller.Create)

@@ -82,8 +82,8 @@ func (a *ApiService) CreateApp() *fiber.App {
 	app.Use(middlewares.AuthMiddleware)
 
 	routers.AuthRouter(app.Group("/auth"))
-
-	routers.SAIRouter(app)
+	routers.SAIRouter(app.Group("/sai"))
+	routers.DNSRouter(app.Group("/dns"))
 
 	return app
 }

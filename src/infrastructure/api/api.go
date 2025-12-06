@@ -82,8 +82,7 @@ func (a *ApiService) CreateApp() *fiber.App {
 	app.Use(middlewares.AuthMiddleware)
 
 	routers.AuthRouter(app.Group("/auth"))
-	routers.SAIRouter(app.Group("/sai"))
-	routers.DNSRouter(app.Group("/dns"))
+	routers.TelegramRouter(app.Group("/telegram"))
 
 	return app
 }

@@ -2,6 +2,9 @@ package shared
 
 import (
 	"fmt"
+	"homelabs-service/src/domain/queries"
+	"strconv"
+	"strings"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
@@ -22,6 +25,7 @@ type IParserStructure interface {
 	SafeInt64(i *int64) (int64, error)
 	SafeStringSlice(s *[]string) ([]string, error)
 	FlattenMap(data bson.M, prefix string, out bson.M)
+	ParseFormData(rawBody string) *queries.DNS
 }
 
 func Parser() IParserStructure {
@@ -119,6 +123,42 @@ func (p *IParser) FlattenMap(data bson.M, prefix string, out bson.M) {
 			out[key] = v
 		}
 	}
+}
+
+func (p *IParser) ParseFormData(rawBody string) *queries.DNS {
+	bodyData := new(queries.DNS)
+
+	for _, pair := range strings.Split(rawBody, "&") {
+		pair = strings.TrimSpace(pair)
+		if pair == "" {
+			continue
+		}
+
+		parts := strings.SplitN(pair, "=", 2)
+		if len(parts) != 2 {
+			continue
+		}
+
+		key := strings.TrimSpace(parts[0])
+		val := strings.TrimSpace(parts[1])
+
+		switch key {
+		case "dns_id":
+			if dnsId, err := strconv.Atoi(val); err == nil {
+				bodyData.DNSId = &dnsId
+			}
+		case "status_id":
+			if statusId, err := strconv.Atoi(val); err == nil {
+				bodyData.StatusId = &statusId
+			}
+		case "created_at":
+			if createdAt, err := strconv.ParseInt(val, 10, 64); err == nil {
+				bodyData.CreatedAt = &createdAt
+			}
+		}
+	}
+
+	return bodyData
 }
 
 var PARSER = Parser()

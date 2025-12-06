@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"homelabs-service/src/shared"
+
 	"github.com/gofiber/fiber/v3"
 )
 

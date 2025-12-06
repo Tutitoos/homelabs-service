@@ -11,7 +11,7 @@ func TelegramRouter(router fiber.Router) fiber.Router {
 
 	router.Post("/sai", controller.SAI)
 	router.Post("/dns", controller.DNS)
-	router.Post("/backups", controller.Backup)
+	router.Post("/backup", controller.Backup)
 
 	return router
 }

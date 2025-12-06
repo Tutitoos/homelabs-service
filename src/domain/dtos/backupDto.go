@@ -15,7 +15,7 @@ type Backup struct {
 
 func NewBackup(backup queries.Backup) Backup {
 	zoneId, _ := shared.PARSER.SafeInt(backup.ZoneId)
-	zoneName := domain.SAI.GetZoneName(zoneId)
+	zoneName := domain.BACKUP.GetZoneName(zoneId)
 	message, _ := shared.PARSER.SafeString(backup.Message)
 	createdAt, _ := shared.PARSER.SafeInt64(backup.CreatedAt)
 

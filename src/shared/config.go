@@ -11,31 +11,25 @@ import (
 )
 
 type IConfig struct {
-	AppEnv                  string
-	BasePort                int
-	BaseUrl                 string
-	BaseToken               string
-	BaseMultiProcess        bool
-	BaseAllowedOrigins      []string
-	DatabaseMongoDbHost     string
-	DatabaseMongoDbUser     string
-	DatabaseMongoDbPassword string
-	TelegramBotToken        string
-	TelegramChatID          string
+	AppEnv             string
+	BasePort           int
+	BaseUrl            string
+	BaseToken          string
+	BaseMultiProcess   bool
+	BaseAllowedOrigins []string
+	TelegramBotToken   string
+	TelegramChatID     string
 }
 
 const (
-	EnvAppEnv                  = "APP_ENV"
-	EnvBasePort                = "BASE_PORT"
-	EnvBaseUrl                 = "BASE_URL"
-	EnvBaseToken               = "BASE_TOKEN"
-	EnvBaseMultiProcess        = "BASE_MULTI_PROCESS"
-	EnvBaseAllowedOrigins      = "BASE_ALLOWED_ORIGINS"
-	EnvDatabaseMongoDbHost     = "DATABASE_MONGODB_HOST"
-	EnvDatabaseMongoDbUser     = "DATABASE_MONGODB_USER"
-	EnvDatabaseMongoDbPassword = "DATABASE_MONGODB_PASSWORD"
-	EnvTelegramBotToken        = "TELEGRAM_BOT_TOKEN"
-	EnvTelegramChatID          = "TELEGRAM_CHAT_ID"
+	EnvAppEnv             = "APP_ENV"
+	EnvBasePort           = "BASE_PORT"
+	EnvBaseUrl            = "BASE_URL"
+	EnvBaseToken          = "BASE_TOKEN"
+	EnvBaseMultiProcess   = "BASE_MULTI_PROCESS"
+	EnvBaseAllowedOrigins = "BASE_ALLOWED_ORIGINS"
+	EnvTelegramBotToken   = "TELEGRAM_BOT_TOKEN"
+	EnvTelegramChatID     = "TELEGRAM_CHAT_ID"
 )
 
 var (
@@ -65,18 +59,6 @@ func (c *IConfig) Validate() error {
 
 	if len(c.BaseAllowedOrigins) == 0 {
 		return fmt.Errorf("BASE_ALLOWED_ORIGINS is required")
-	}
-
-	if c.DatabaseMongoDbHost == "" {
-		return fmt.Errorf("DATABASE_MONGODB_HOST is required")
-	}
-
-	if c.DatabaseMongoDbUser == "" {
-		return fmt.Errorf("DATABASE_MONGODB_USER is required")
-	}
-
-	if c.DatabaseMongoDbPassword == "" {
-		return fmt.Errorf("DATABASE_MONGODB_PASSWORD is required")
 	}
 
 	if c.TelegramBotToken == "" {
@@ -152,21 +134,6 @@ func Load() error {
 		if strings.Contains(cfg.BaseAllowedOrigins[i], ":") {
 			return fmt.Errorf("environment variable %s contains an IPv6 origin, which is not allowed: %s", EnvBaseAllowedOrigins, cfg.BaseAllowedOrigins[i])
 		}
-	}
-
-	cfg.DatabaseMongoDbHost = GetEnv(EnvDatabaseMongoDbHost, "localhost")
-	if cfg.DatabaseMongoDbHost == "" {
-		return fmt.Errorf("environment variable %s is required", EnvDatabaseMongoDbHost)
-	}
-
-	cfg.DatabaseMongoDbUser = GetEnv(EnvDatabaseMongoDbUser, "")
-	if cfg.DatabaseMongoDbUser == "" {
-		return fmt.Errorf("environment variable %s is required", EnvDatabaseMongoDbUser)
-	}
-
-	cfg.DatabaseMongoDbPassword = GetEnv(EnvDatabaseMongoDbPassword, "")
-	if cfg.DatabaseMongoDbPassword == "" {
-		return fmt.Errorf("environment variable %s is required", EnvDatabaseMongoDbPassword)
 	}
 
 	cfg.TelegramBotToken = GetEnv(EnvTelegramBotToken, "")
